@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        /*stage('Install Dependencies') {
+        stage('Install Dependencies') {
             steps {
                 script {
                     try {
@@ -19,7 +19,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Build Angular') {
             steps {
