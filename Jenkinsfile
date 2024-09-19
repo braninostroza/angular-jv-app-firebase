@@ -14,6 +14,7 @@ pipeline {
                         // Clona el repositorio desde GitHub
                         git url: 'https://github.com/braninostroza/angular-jv-app-firebase.git', branch: 'main'
                         echo 'Repositorio clonado exitosamente'
+                        echo '[SUCCESS] - El paso de Checkout ha funcionado correctamente'
                     } catch (Exception e) {
                         error "Error durante la clonación del repositorio: ${e.message}"
                     }
@@ -28,6 +29,7 @@ pipeline {
                         // Instala dependencias de Node.js y Angular
                         sh 'npm ci'  // npm ci es más eficiente para CI/CD
                         echo 'Dependencias instaladas correctamente'
+                        echo '[SUCCESS] - El paso de Instalación de Dependencias ha funcionado correctamente'
                     } catch (Exception e) {
                         error "Error durante la instalación de dependencias: ${e.message}"
                     }
@@ -42,6 +44,7 @@ pipeline {
                         // Compila el proyecto Angular en modo producción
                         sh 'ng build --configuration production'
                         echo 'Proyecto Angular compilado con éxito'
+                        echo '[SUCCESS] - El paso de Compilación de Angular ha funcionado correctamente'
                     } catch (Exception e) {
                         error "Error durante la construcción del proyecto Angular: ${e.message}"
                     }
@@ -56,6 +59,7 @@ pipeline {
                         // Despliega a Firebase usando la variable de entorno
                         sh 'firebase deploy --token $FIREBASE_TOKEN'
                         echo 'Despliegue a Firebase realizado con éxito'
+                        echo '[SUCCESS] - El paso de Despliegue a Firebase ha funcionado correctamente'
                     } catch (Exception e) {
                         error "Error durante el despliegue a Firebase: ${e.message}"
                     }
