@@ -13,6 +13,7 @@ pipeline {
                     try {
                         // Clona el repositorio desde GitHub
                         git url: 'https://github.com/braninostroza/angular-jv-app-firebase.git', branch: 'main'
+                        echo 'Repositorio clonado exitosamente'
                     } catch (Exception e) {
                         error "Error durante la clonación del repositorio: ${e.message}"
                     }
@@ -25,7 +26,8 @@ pipeline {
                 script {
                     try {
                         // Instala dependencias de Node.js y Angular
-                        sh 'npm install'
+                        sh 'npm ci'  // npm ci es más eficiente para CI/CD
+                        echo 'Dependencias instaladas correctamente'
                     } catch (Exception e) {
                         error "Error durante la instalación de dependencias: ${e.message}"
                     }
@@ -37,35 +39,10 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Compila el proyecto Angular
-                        sh 'ng build --prod'
+                        // Compila el proyecto Angular en modo producción
+                        sh 'ng build --configuration production'
+                        echo 'Proyecto Angular compilado con éxito'
                     } catch (Exception e) {
                         error "Error durante la construcción del proyecto Angular: ${e.message}"
                     }
-                }
-            }
-        }
-        
-        stage('Deploy to Firebase') {
-            steps {
-                script {
-                    try {
-                        // Despliega a Firebase usando la variable de entorno
-                        sh 'firebase deploy --token $FIREBASE_TOKEN'
-                    } catch (Exception e) {
-                        error "Error durante el despliegue a Firebase: ${e.message}"
-                    }
-                }
-            }
-        }
-    }
-    
-    post {
-        success {
-            echo 'Despliegue completado con éxito'
-        }
-        failure {
-            echo 'El pipeline falló. Revisa los logs para más detalles.'
-        }
-    }
-}
+               
