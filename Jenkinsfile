@@ -45,4 +45,34 @@ pipeline {
                     } catch (Exception e) {
                         error "Error durante la construcción del proyecto Angular: ${e.message}"
                     }
-               
+                }
+            }
+        }
+        
+        stage('Deploy to Firebase') {
+            steps {
+                script {
+                    try {
+                        // Despliega a Firebase usando la variable de entorno
+                        sh 'firebase deploy --token $FIREBASE_TOKEN'
+                        echo 'Despliegue a Firebase realizado con éxito'
+                    } catch (Exception e) {
+                        error "Error durante el despliegue a Firebase: ${e.message}"
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            script {
+                if (currentBuild.currentResult == 'SUCCESS') {
+                    echo 'El pipeline se completó correctamente'
+                } else {
+                    echo 'El pipeline falló. Revisa los logs para más detalles.'
+                }
+            }
+        }
+    }
+}
