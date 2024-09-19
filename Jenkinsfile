@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         NODE_ENV = 'production'
-        FIREBASE_TOKEN = credentials('FIREBASE_TOKEN')  // Referencia a la variable global
+        FIREBASE_TOKEN = credentials('AIzaSyBvrALsrgfneqthuAgZIrYww7KpcrMQE7E')  // Referencia a la variable global
     }
     
     stages {
