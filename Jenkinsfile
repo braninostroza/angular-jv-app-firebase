@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona el repositorio desde GitHub
-                git url: 'https://github.com/Benjamin1106/Proyeco-Portafolio.git', branch: 'main'
+                git url: 'https://github.com/braninostroza/angular-jv-app-firebase.git', branch: 'main'
             }
         }
 
@@ -38,8 +38,8 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Despliega a Firebase usando el token de entorno
-                        sh 'firebase deploy --only hosting --token $FIREBASE_DEPLOY_TOKEN'
+                        // Despliega a Firebase usando la variable de entorno
+                        sh 'firebase deploy --only hosting --token ${FIREBASE_DEPLOY_TOKEN}'
                     } catch (Exception e) {
                         error "Error durante el despliegue a Firebase"
                     }
