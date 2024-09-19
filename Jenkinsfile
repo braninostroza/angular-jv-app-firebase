@@ -26,7 +26,7 @@ pipeline {
                 script {
                     try {
                         // Compila el proyecto Angular
-                        sh 'npm run build --prod'
+                        sh 'npm run build'
                     } catch (Exception e) {
                         error "Error durante la construcción del proyecto Angular"
                     }
@@ -39,7 +39,7 @@ pipeline {
                 script {
                     try {
                         // Despliega a Firebase usando la variable de entorno
-                        sh 'firebase deploy --only hosting --token ${FIREBASE_DEPLOY_TOKEN}'
+                        sh 'firebase deploy --token ${FIREBASE_DEPLOY_TOKEN}'
                     } catch (Exception e) {
                         error "Error durante el despliegue a Firebase"
                     }
