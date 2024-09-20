@@ -36,18 +36,18 @@ pipeline {
         }
         
         stage('Build Angular') {
-            steps {
-                script {
-                    try {
-                        // Compila el proyecto Angular en modo producción (en Windows usa 'bat' en lugar de 'sh')
-                        bat 'ng build --configuration production'
-                        echo '[SUCCESS] - El proyecto Angular se ha compilado correctamente'
-                    } catch (Exception e) {
-                        error "[ERROR] - Error durante la compilación del proyecto Angular: ${e.message}"
-                    }
-                }
+    steps {
+        script {
+            try {
+                // Usando npx para ejecutar la CLI local de Angular
+                bat 'npx ng build --configuration production'
+                echo '[SUCCESS] - El proyecto Angular se ha compilado correctamente'
+            } catch (Exception e) {
+                error "[ERROR] - Error durante la compilación del proyecto Angular: ${e.message}"
             }
         }
+    }
+}
         
         stage('Deploy to Firebase') {
             steps {
