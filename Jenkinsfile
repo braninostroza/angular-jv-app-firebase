@@ -21,6 +21,7 @@ pipeline {
                 script {
                     bat 'npm cache clean --force'  // Limpiar caché
                     bat 'npm ci'  // Instalación limpia de dependencias
+                    bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
                 }
             }
