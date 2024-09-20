@@ -29,6 +29,24 @@ pipeline {
             }
         }
         
+        stage('Check Angular CLI') {
+            steps {
+                script {
+                    bat 'where ng'  // Comando para verificar si Angular CLI está en el PATH
+                }
+            }
+        }
+
+        stage('Check Global Angular CLI') {
+            steps {
+                script {
+                    bat 'npm list -g @angular/cli'
+                }
+            }
+        }
+
+
+
         stage('Build Angular') {
             steps {
                 script {
