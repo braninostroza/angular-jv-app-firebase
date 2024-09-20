@@ -11,12 +11,11 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Clona el repositorio desde GitHub
-                        git url: 'https://github.com/braninostroza/angular-jv-app-firebase.git', branch: 'main'
-                        echo 'Repositorio clonado exitosamente'
-                        echo '[SUCCESS] - El paso de Checkout ha funcionado correctamente'
+                        // Clona el repositorio desde GitHub (añadir credenciales si es privado)
+                        git url: 'https://github.com/braninostroza/angular-jv-app-firebase.git', branch: 'main', credentialsId: 'your-credential-id'  // Si es privado
+                        echo '[SUCCESS] - El repositorio ha sido clonado correctamente'
                     } catch (Exception e) {
-                        error "Error durante la clonación del repositorio: ${e.message}"
+                        error "[ERROR] - Error durante la clonación del repositorio: ${e.message}"
                     }
                 }
             }
@@ -26,12 +25,11 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Instala dependencias de Node.js y Angular
-                        sh 'npm ci'  // npm ci es más eficiente para CI/CD
-                        echo 'Dependencias instaladas correctamente'
-                        echo '[SUCCESS] - El paso de Instalación de Dependencias ha funcionado correctamente'
+                        // Instala dependencias de Node.js y Angular (en Windows usa 'bat' en lugar de 'sh')
+                        bat 'npm ci'  // Comando compatible con Windows
+                        echo '[SUCCESS] - Las dependencias se han instalado correctamente'
                     } catch (Exception e) {
-                        error "Error durante la instalación de dependencias: ${e.message}"
+                        error "[ERROR] - Error durante la instalación de dependencias: ${e.message}"
                     }
                 }
             }
@@ -41,12 +39,11 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Compila el proyecto Angular en modo producción
-                        sh 'ng build --configuration production'
-                        echo 'Proyecto Angular compilado con éxito'
-                        echo '[SUCCESS] - El paso de Compilación de Angular ha funcionado correctamente'
+                        // Compila el proyecto Angular en modo producción (en Windows usa 'bat' en lugar de 'sh')
+                        bat 'ng build --configuration production'
+                        echo '[SUCCESS] - El proyecto Angular se ha compilado correctamente'
                     } catch (Exception e) {
-                        error "Error durante la construcción del proyecto Angular: ${e.message}"
+                        error "[ERROR] - Error durante la compilación del proyecto Angular: ${e.message}"
                     }
                 }
             }
@@ -56,12 +53,11 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Despliega a Firebase usando la variable de entorno
-                        sh 'firebase deploy --token $FIREBASE_TOKEN'
-                        echo 'Despliegue a Firebase realizado con éxito'
-                        echo '[SUCCESS] - El paso de Despliegue a Firebase ha funcionado correctamente'
+                        // Despliega a Firebase usando la variable de entorno (en Windows usa 'bat' en lugar de 'sh')
+                        bat 'firebase deploy --token %FIREBASE_TOKEN%'
+                        echo '[SUCCESS] - Despliegue a Firebase realizado con éxito'
                     } catch (Exception e) {
-                        error "Error durante el despliegue a Firebase: ${e.message}"
+                        error "[ERROR] - Error durante el despliegue a Firebase: ${e.message}"
                     }
                 }
             }
@@ -72,9 +68,9 @@ pipeline {
         always {
             script {
                 if (currentBuild.currentResult == 'SUCCESS') {
-                    echo 'El pipeline se completó correctamente'
+                    echo '[SUCCESS] - El pipeline se completó correctamente'
                 } else {
-                    echo 'El pipeline falló. Revisa los logs para más detalles.'
+                    echo '[FAILURE] - El pipeline falló. Revisa los logs para más detalles.'
                 }
             }
         }
