@@ -19,7 +19,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    bat 'npm ci'
+                    bat 'npm cache clean --force'  // Limpiar caché
+                    bat 'npm ci'  // Instalación limpia de dependencias
                     bat 'npm install -g @angular/cli'  // Instala Angular CLI globalmente
                     bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
@@ -31,6 +32,7 @@ pipeline {
             steps {
                 script {
                     bat 'npx ng build --configuration production'
+                    echo '[SUCCESS] - Construcción de Angular completada'
                 }
             }
         }
@@ -38,7 +40,7 @@ pipeline {
         stage('Deploy to Firebase') {
             steps {
                 script {
-                    bat 'firebase deploy --token $FIREBASE_TOKEN'
+                    bat "firebase deploy --token ${FIREBASE_TOKEN}"
                     echo '[SUCCESS] - Despliegue a Firebase realizado con éxito'
                 }
             }
