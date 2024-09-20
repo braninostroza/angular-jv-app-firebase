@@ -29,7 +29,7 @@ pipeline {
         stage('Build Angular') {
             steps {
                 script {
-                    bat 'npm run build --configuration production'  // Cambia a solo ng build
+                    bat 'npx ng build --configuration production'
                 }
             }
         }
