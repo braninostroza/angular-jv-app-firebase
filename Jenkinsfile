@@ -23,7 +23,7 @@ pipeline {
                     bat 'npm ci'  // Instalación limpia de dependencias
                     bat 'npm install -g @angular/cli'
                     bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
-                    bat 'ng update @angular/cli @angular/core --allow-dirty --force'
+                    //bat 'ng update @angular/cli @angular/core --allow-dirty --force'
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
                 }
             }
