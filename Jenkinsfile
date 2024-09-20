@@ -21,6 +21,7 @@ pipeline {
                 script {
                     bat 'npm ci'
                     bat 'npm install -g @angular/cli'  // Instala Angular CLI globalmente
+                    bat 'npm install --save-dev @angular-devkit/build-angular'
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
                 }
             }
