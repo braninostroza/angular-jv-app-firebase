@@ -15,7 +15,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Install Dependencies') {
             steps {
                 script {
@@ -27,11 +27,21 @@ pipeline {
                 }
             }
         }
+        
+        stage('Check Angular CLI') {
+            steps {
+                script {
+                    // Forzar la ruta absoluta del comando ng
+                    bat '"C:\\Users\\Brandon\\AppData\\Roaming\\npm\\ng.cmd" version'  
+                    echo '[SUCCESS] - Angular CLI verificado'
+                }
+            }
+        }
 
         stage('Build Angular') {
             steps {
                 script {
-                    bat 'npm run build --configuration production'
+                    bat '"C:\\Users\\Brandon\\AppData\\Roaming\\npm\\ng.cmd" build --configuration production'
                     echo '[SUCCESS] - Construcción de Angular completada'
                 }
             }
@@ -40,7 +50,7 @@ pipeline {
         stage('Deploy to Firebase') {
             steps {
                 script {
-                    bat "firebase deploy --token ${FIREBASE_TOKEN}"
+                    bat 'firebase deploy --token ${FIREBASE_TOKEN}'
                     echo '[SUCCESS] - Despliegue a Firebase realizado con éxito'
                 }
             }
