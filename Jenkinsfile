@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         NODE_ENV = 'production'
-        FIREBASE_TOKEN = credentials('FIREBASE_TOKEN')  // Referencia a la variable global
+        GOOGLE_APPLICATION_CREDENTIALS = 'C:\\ProgramData\\Jenkins\\.jenkins\\key\\deploy.json' // Ruta a tu archivo JSON
     }
     
     stages {
@@ -21,7 +21,7 @@ pipeline {
                 script {
                     try {
                         // Compila el proyecto Angular
-                        sh 'ng build --prod'
+                        bat 'npm run build'
                     } catch (Exception e) {
                         error "Error durante la construcción del proyecto Angular: ${e.message}"
                     }
@@ -32,7 +32,7 @@ pipeline {
         stage('Deploy to Firebase') {
             steps {
                 script {
-                    bat 'firebase deploy --token ${FIREBASE_TOKEN}'
+                    bat 'firebase deploy' // Desplegar a Firebase sin usar el token
                     echo '[SUCCESS] - Despliegue a Firebase realizado con éxito'
                 }
             }
