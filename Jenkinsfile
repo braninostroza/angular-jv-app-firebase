@@ -23,6 +23,7 @@ pipeline {
                     bat 'npm ci'  // Instalación limpia de dependencias
                     bat 'npm install @angular/cli'
                     bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
+                    bat 'npm install typescript @angular/compiler-cli --save-dev'  // Instalar dependencias adicionales
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
                 }
             }
