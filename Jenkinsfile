@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         NODE_ENV = 'production'
-        GOOGLE_APPLICATION_CREDENTIALS = 'C:\\ProgramData\\Jenkins\\.jenkins\\key\\deploy.json' // Ruta a tu archivo JSON
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('Deploy-Angular')
     }
     
     stages {
