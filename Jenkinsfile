@@ -15,15 +15,7 @@ pipeline {
                 }
             }
         }
-        
-        stage('Check PATH') {
-            steps {
-                script {
-                    bat 'echo PATH: %PATH%'  // Verificar el PATH actual
-                }
-            }
-        }
-        
+
         stage('Install Dependencies') {
             steps {
                 script {
@@ -32,15 +24,6 @@ pipeline {
                     bat 'npm install @angular/cli'
                     bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
                     echo '[SUCCESS] - Las dependencias se han instalado correctamente'
-                }
-            }
-        }
-        
-        stage('Check Angular CLI') {
-            steps {
-                script {
-                    bat 'where cmd'  // Verificar si cmd está disponible
-                    bat 'where ng'   // Verificar si Angular CLI está en el PATH
                 }
             }
         }
