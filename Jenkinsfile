@@ -16,34 +16,15 @@ pipeline {
             }
         }
         
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    bat 'npm cache clean --force'  // Limpiar caché
-                    bat 'npm ci'  // Instalación limpia de dependencias
-                    bat 'npm install @angular/cli'
-                    bat 'npm install --save-dev @angular-devkit/build-angular --legacy-peer-deps'
-                    bat 'npm install typescript @angular/compiler-cli --save-dev'  // Instalar dependencias adicionales
-                    echo '[SUCCESS] - Las dependencias se han instalado correctamente'
-                }
-            }
-        }
-        
-        stage('Check Angular CLI') {
-            steps {
-                script {
-                    // Forzar la ruta absoluta del comando ng
-                    bat '"C:\\Users\\Brandon\\AppData\\Roaming\\npm\\ng.cmd" version'  
-                    echo '[SUCCESS] - Angular CLI verificado'
-                }
-            }
-        }
-
         stage('Build Angular') {
             steps {
                 script {
-                    bat '"C:\\Users\\Brandon\\AppData\\Roaming\\npm\\ng.cmd" build --configuration production'
-                    echo '[SUCCESS] - Construcción de Angular completada'
+                    try {
+                        // Compila el proyecto Angular
+                        sh 'ng build --prod'
+                    } catch (Exception e) {
+                        error "Error durante la construcción del proyecto Angular: ${e.message}"
+                    }
                 }
             }
         }
